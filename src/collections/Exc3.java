@@ -33,8 +33,68 @@ package collections;
         ACCOUNTANT: PROCESS INVOICE
         ACCOUNTANT: PROCESS INVOICE*/
 
-public class Exc3 {
-        public static void main(String[] args) {
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
+import java.util.Scanner;
 
+public class Exc3 {
+        InvoiceStack invoiceStack = new InvoiceStack();
+
+
+
+
+        public static void main(String[] args) {
+//                Invoice invoice = new Invoice();
+                InvoiceStack stack= new InvoiceStack();
+
+
+                List<String> commands = List.of(
+                        "CEO: ADD INVOICE(19.20)",
+                        "CEO: ADD INVOICE(31.40)",
+                        "ACCOUNTANT: PROCESS INVOICE",
+                        "CEO: ADD INVOICE(21.20)",
+                        "CEO: ADD INVOICE(120.99)",
+                        "ACCOUNTANT: PROCESS INVOICE",
+                        "ACCOUNTANT: PROCESS INVOICE",
+                        "ACCOUNTANT: PROCESS INVOICE"
+                );
+                for (String command : commands) {
+                        stack.processInput(command);
+                }
+
+               Scanner scanner = new Scanner(System.in); //wprowadzanie poleceń w konsoli
+
+                System.out.println("Provide new invoice by entering \"CEO: ADD INVOICE(amount)\" \"or process invoice by entering \\\"ACCOUNTANT: PROCESS INVOICE\\\"\"");
+                while (scanner.hasNext()){
+                        String command = scanner.nextLine();
+                        if("EXIT".equals(command)){
+                                break;
+                        }
+                        stack.processInput(command);
+                }
         }
+
+        static class Invoice {
+                Integer id;
+                BigDecimal amount;
+
+                public Invoice(String id, int amount) {
+                        this.id = Integer.valueOf(id);
+                        this.amount = BigDecimal.valueOf(amount);
+                }
+
+                public Integer getId() {
+                        return id;
+                }
+
+                public BigDecimal getAmount() {
+                        return amount;
+                }
+        }
+
+
+
 }
